@@ -1,0 +1,21 @@
+defaultNamespace: default
+helm:
+  chart: suse-observability-agent
+  repo: https://charts.rancher.com/server-charts/prime/suse-observability
+  values:
+    # httpHeaderInjectorWebhook:
+    #   enabled: true
+    stackstate:
+      apiKey: ' RLXg24puOag2ObH9PEtEisTA6VcFLI0I'
+      cluster:
+        name: rancher
+      url: http://54.170.109.234:30465/receiver/stsAgent
+
+targetCustomizations:
+  - name: all
+    # doNotDeploy: false
+    
+    # correctDrift:
+    #   enabled: false
+    #   force: false # Warning: it might recreate resources if set to true
+    #   keepFailHistory: false
