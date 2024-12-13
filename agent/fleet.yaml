@@ -1,5 +1,4 @@
-namespace: suse-observability
-create-namespace: true
+namespace: default
 helm:
   chart: suse-observability-agent
   repo: https://charts.rancher.com/server-charts/prime/suse-observability

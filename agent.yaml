@@ -10,11 +10,13 @@ spec:
   branch: main
   
   paths:
-    - agent/**
+    - agent
   
   targets:
     - name: local
-      clusterSelector: {}
+      clusterSelector:
+        matchLabels:
+          name: local
   
   pollingInterval: 15s
 
