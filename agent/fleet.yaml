@@ -15,7 +15,7 @@ targetCustomizations:
   - name: all
     # doNotDeploy: false
     
-    correctDrift:
-      enabled: false
-      force: false # Warning: it might recreate resources if set to true
-      keepFailHistory: false
+    # correctDrift:
+    #   enabled: false
+    #   force: false # Warning: it might recreate resources if set to true
+    #   keepFailHistory: false
