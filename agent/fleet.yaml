@@ -3,6 +3,8 @@ helm:
   chart: suse-observability-agent
   repo: https://charts.rancher.com/server-charts/prime/suse-observability
   values:
+    httpHeaderInjectorWebhook:
+      enabled: true
     stackstate:
       apiKey: ' RLXg24puOag2ObH9PEtEisTA6VcFLI0I'
       cluster:
