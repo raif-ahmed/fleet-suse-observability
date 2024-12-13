@@ -1,0 +1,33 @@
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: suse-observability-agent
+  namespace: fleet-local
+labels:
+  owner-repo: suse-observability-agent
+spec:
+  repo: https://github.com/raif-ahmed/fleet-suse-observability
+  branch: main
+  
+  paths:
+    - agent/**
+  
+  targets:
+    - name: local
+      clusterSelector: {}
+  
+  pollingInterval: 15s
+
+  # Paused  causes changes in Git to not be propagated down to the clusters but
+  # instead mark resources as OutOfSync
+  # paused: false
+
+  # Increment this number to force a redeployment of contents from Git
+  #
+  # forceSyncGeneration: 0
+  correctDrift:
+    enabled: true
+  # KeepResources specifies if the resources created must be kept after deleting the *GitRepo*.
+  keepResources: false
+  # DeleteNamespace specifies if the namespace created must be deleted after deleting the *GitRepo*.
+  deleteNamespace: true
