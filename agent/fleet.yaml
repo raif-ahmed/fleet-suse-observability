@@ -3,19 +3,371 @@ helm:
   chart: suse-observability-agent
   repo: https://charts.rancher.com/server-charts/prime/suse-observability
   values:
-    httpHeaderInjectorWebhook:
+    all:
+      hardening:
+        enabled: false
+      image:
+        registry: null
+      registry:
+        override: false
+    checksAgent:
+      affinity: {}
+      checksTagCardinality: orchestrator
+      config:
+        override: null
       enabled: true
+      image:
+        pullPolicy: IfNotPresent
+        repository: suse-observability/stackstate-k8s-agent
+        tag: 13b6bde5
+      livenessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 15
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      logLevel: INFO
+      networkTracing:
+        enabled: true
+      nodeSelector: {}
+      priorityClassName: ''
+      processAgent:
+        enabled: true
+      readinessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 15
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      replicas: 1
+      resources:
+        limits:
+          cpu: 400m
+          memory: 600Mi
+        requests:
+          cpu: 20m
+          memory: 512Mi
+      scc:
+        enabled: false
+      serviceaccount:
+        annotations: {}
+      skipSslValidation: false
+      strategy:
+        type: RollingUpdate
+      tolerations: null
+    clusterAgent:
+      affinity: {}
+      collection:
+        kubeStateMetrics:
+          annotationsAsTags: {}
+          clusterCheck: false
+          enabled: true
+          labelsAsTags: {}
+        kubernetesEvents: true
+        kubernetesMetrics: true
+        kubernetesResources:
+          configmaps: true
+          cronjobs: true
+          daemonsets: true
+          deployments: true
+          endpoints: true
+          horizontalpodautoscalers: true
+          ingresses: true
+          jobs: true
+          limitranges: true
+          namespaces: true
+          persistentvolumeclaims: true
+          persistentvolumes: true
+          poddisruptionbudgets: true
+          replicasets: true
+          replicationcontrollers: true
+          resourcequotas: true
+          secrets: true
+          statefulsets: true
+          storageclasses: true
+          volumeattachments: true
+        kubernetesTimeout: 10
+        kubernetesTopology: true
+      config:
+        configMap:
+          maxDataSize: null
+        events:
+          categories: {}
+        override: null
+        topology:
+          collectionInterval: 90
+      enabled: true
+      image:
+        pullPolicy: IfNotPresent
+        repository: suse-observability/stackstate-k8s-cluster-agent
+        tag: 13b6bde5
+      livenessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 15
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      logLevel: INFO
+      nodeSelector: {}
+      priorityClassName: ''
+      readinessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 15
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: 400m
+          memory: 800Mi
+        requests:
+          cpu: 70m
+          memory: 512Mi
+        override: false
+      service:
+        port: 5005
+        targetPort: 5005
+      serviceaccount:
+        annotations: {}
+      skipSslValidation: false
+      strategy:
+        type: RollingUpdate
+      tolerations: null
+    fullnameOverride: ''
+    global:
+      extraAnnotations: {}
+      extraEnv:
+        open: {}
+        secret: {}
+      extraLabels: {}
+      imagePullCredentials: {}
+      imagePullSecrets: null
+      imageRegistry: registry.rancher.com
+      proxy:
+        url: ''
+      skipSslValidation: false
+      cattle:
+        clusterId: local
+        clusterName: local
+        rkePathPrefix: ''
+        rkeWindowsPathPrefix: ''
+        systemProjectId: p-54hvl
+        url: https://r-1-0-0-ing-ext-c325369af960f3b4.elb.eu-west-1.amazonaws.com
+    httpHeaderInjectorWebhook:
+      certificatePrehook:
+        image:
+          pullPolicy: IfNotPresent
+          registry: null
+          repository: suse-observability/container-tools
+          tag: 1.4.0
+        resources:
+          limits:
+            cpu: 100m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+      debug: false
+      enabled: false
+      global:
+        extraAnnotations: {}
+        extraEnv:
+          open: {}
+          secret: {}
+        extraLabels: {}
+        imagePullCredentials: {}
+        imagePullSecrets: null
+        imageRegistry: registry.rancher.com
+        proxy:
+          url: ''
+        skipSslValidation: false
+      images:
+        pullSecretName: null
+      proxy:
+        image:
+          pullPolicy: IfNotPresent
+          registry: null
+          repository: suse-observability/http-header-injector-proxy
+          tag: sha-5ff79451
+        resources:
+          limits:
+            memory: 40Mi
+          requests:
+            memory: 25Mi
+      proxyInit:
+        image:
+          pullPolicy: IfNotPresent
+          registry: null
+          repository: suse-observability/http-header-injector-proxy-init
+          tag: sha-5ff79451
+      sidecarInjector:
+        image:
+          pullPolicy: IfNotPresent
+          registry: null
+          repository: suse-observability/generic-sidecar-injector
+          tag: sha-5678567f
+      webhook:
+        failurePolicy: Ignore
+        tls:
+          certManager:
+            issuer: ''
+            issuerKind: ClusterIssuer
+            issuerNamespace: ''
+          mode: generated
+          provided:
+            caBundle: ''
+            crt: ''
+            key: ''
+          secret:
+            name: ''
+    logsAgent:
+      affinity: {}
+      enabled: true
+      image:
+        pullPolicy: IfNotPresent
+        repository: suse-observability/promtail
+        tag: 2.9.10-5400572f
+      nodeSelector: {}
+      priorityClassName: ''
+      resources:
+        limits:
+          cpu: 1300m
+          memory: 192Mi
+        requests:
+          cpu: 20m
+          memory: 100Mi
+        override: false
+      serviceaccount:
+        annotations: {}
+      skipSslValidation: false
+      tolerations: null
+      updateStrategy:
+        rollingUpdate:
+          maxUnavailable: 100
+        type: RollingUpdate
+    nameOverride: ''
+    nodeAgent:
+      affinity: {}
+      autoScalingEnabled: false
+      checksTagCardinality: orchestrator
+      config:
+        override: null
+      containerRuntime:
+        customSocketPath: ''
+        hostProc: /proc
+      containers:
+        agent:
+          env: {}
+          image:
+            pullPolicy: IfNotPresent
+            repository: suse-observability/stackstate-k8s-agent
+            tag: 13b6bde5
+          livenessProbe:
+            enabled: true
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          logLevel: null
+          readinessProbe:
+            enabled: true
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 270m
+              memory: 420Mi
+            requests:
+              cpu: 20m
+              memory: 180Mi
+            override: false
+        processAgent:
+          enabled: true
+          env: {}
+          image:
+            pullPolicy: IfNotPresent
+            registry: null
+            repository: suse-observability/stackstate-k8s-process-agent
+            tag: 09afd849
+          logLevel: null
+          procVolumeReadOnly: true
+          resources:
+            limits:
+              cpu: 125m
+              memory: 400Mi
+            requests:
+              cpu: 25m
+              memory: 128Mi
+            override: false
+      httpTracing:
+        enabled: true
+      logLevel: INFO
+      networkTracing:
+        enabled: true
+      nodeSelector: {}
+      priorityClassName: ''
+      protocolInspection:
+        enabled: true
+      scaling:
+        autoscalerLimits:
+          agent:
+            maximum:
+              cpu: 200m
+              memory: 450Mi
+            minimum:
+              cpu: 20m
+              memory: 180Mi
+          processAgent:
+            maximum:
+              cpu: 200m
+              memory: 500Mi
+            minimum:
+              cpu: 25m
+              memory: 100Mi
+      scc:
+        enabled: false
+      service:
+        annotations: {}
+        loadBalancerSourceRanges:
+          - 10.0.0.0/8
+        type: ClusterIP
+      serviceaccount:
+        annotations: {}
+      skipKubeletTLSVerify: false
+      skipSslValidation: false
+      tolerations: null
+      updateStrategy:
+        rollingUpdate:
+          maxUnavailable: 100
+        type: RollingUpdate
+    openShiftLogging:
+      installSecret: false
+    processAgent:
+      checkIntervals:
+        connections: 30
+        container: 28
+        process: 32
+      softMemoryLimit:
+        goMemLimit: 340MiB
+        httpObservationsBufferSize: 40000
+        httpStatsBufferSize: 40000
     stackstate:
       apiKey: ' RLXg24puOag2ObH9PEtEisTA6VcFLI0I'
       cluster:
+        authToken: ''
         name: rancher
+      customApiKeySecretKey: sts-api-key
+      customClusterAuthTokenSecretKey: sts-cluster-auth-token
+      customSecretName: ''
+      manageOwnSecrets: false
       url: http://54.170.109.234:30465/receiver/stsAgent
-
-targetCustomizations:
-  - name: all
-    # doNotDeploy: false
-    
-    # correctDrift:
-    #   enabled: false
-    #   force: false # Warning: it might recreate resources if set to true
-    #   keepFailHistory: false
+    targetSystem: linux
